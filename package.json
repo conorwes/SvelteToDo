@@ -5,11 +5,14 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "prettier": "prettier --write --plugin-search-dir=. \"{public,src}/**/*.{css,html,svelte,js,mjs,ts}\"",
     "start": "sirv public --no-clear"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "prettier": "^2.3.1",
+    "prettier-plugin-svelte": "^2.3.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
