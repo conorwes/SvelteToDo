@@ -80,7 +80,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "Courier New", Courier, monospace;
+    font-family: var(--font-monospace);
     font-size: 1.5rem;
     background-color: transparent;
   }
