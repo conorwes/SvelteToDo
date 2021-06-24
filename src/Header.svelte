@@ -1,11 +1,11 @@
 <script>
+  import { tasks } from "./stores";
+
   // buttons are so 2000's, let's use emojis instead
   import EmojiButton from "./EmojiButton.svelte";
 
   // tooltips are helpful
   import ToolTip from "./ToolTip.svelte";
-
-  export let tasks;
 
   let taskDescription = "";
 
@@ -14,7 +14,7 @@
 
   // function to select a random title
   function selectRandomTitle() {
-    let titles = [
+    const titles = [
       "To-Do List",
       "Aufgabenliste",
       "Lista de Pendientes",
@@ -27,13 +27,14 @@
       "רשימת המטלות",
       "🍈🍈🍈", //get it, honeydew? honey do? i'm hilarious...
     ];
-    let index = Math.floor(Math.random() * titles.length);
+    const index = Math.floor(Math.random() * titles.length);
     return titles[index];
   }
 
   // function to add task if users presses enter, instead of clicking the button
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
+  const onKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
       addTask();
     }
   };
@@ -41,10 +42,10 @@
   // function to add a new task to the array
   function addTask() {
     if (taskDescription !== "") {
-      tasks = [
-        ...tasks,
+      tasks.update((values) => [
+        ...values,
         { done: false, text: taskDescription, deleted: false },
-      ];
+      ]);
     }
     taskDescription = "";
   }
@@ -91,9 +92,9 @@
   }
 
   input {
-    background: transparent;
-    font-style: italic;
     margin-right: 0.75rem;
+    background-color: transparent;
+    font-style: italic;
     font-family: var(--font-monospace);
   }
 </style>

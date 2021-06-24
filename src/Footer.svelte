@@ -1,13 +1,13 @@
 <script>
+  import { mode, tasks, activeCount } from "./stores";
+
   export let alertsOn;
-  export let count;
-  export let mode;
-  export let tasks;
 
   // function to clear all tasks
   function clearAllTasks() {
-    if (tasks.length !== 0) {
-      tasks = [];
+    if ($tasks.length !== 0) {
+      tasks.set([]);
+
       if (alertsOn) {
         alert("All done! Time for a drink! 🍸");
       }
@@ -17,19 +17,19 @@
 
 <footer>
   <span>
-    {count}
-    {count === 1 ? "task" : "tasks"} remaining
+    {$activeCount}
+    {$activeCount === 1 ? "task" : "tasks"} remaining
   </span>
   <span>|</span>
   <span>
-    Showing {mode} tasks
+    Showing {$mode} tasks
   </span>
   <span>|</span>
-  <button on:click={() => (mode = "all")}>All</button>
+  <button on:click={() => mode.set("all")}>All</button>
   <span>|</span>
-  <button on:click={() => (mode = "active")}>Active</button>
+  <button on:click={() => mode.set("active")}>Active</button>
   <span>|</span>
-  <button on:click={() => (mode = "completed")}>Completed</button>
+  <button on:click={() => mode.set("completed")}>Completed</button>
   <span>|</span>
   <button on:click={clearAllTasks}>Clear All Tasks</button>
   <span>|</span>

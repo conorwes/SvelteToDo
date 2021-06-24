@@ -3,26 +3,17 @@
   import Header from "./Header.svelte";
   import TaskList from "./TaskList.svelte";
 
-  // array of tasks to do
-  let tasks = [];
-
-  // counter for the bottom of the page
-  let count = 0;
-
   // flag to handle alert status
   let alertsOn = true;
-
-  // toggles mode
-  let mode = "all";
 </script>
 
-<Header bind:tasks />
+<Header />
 
 <main>
-  <TaskList bind:count bind:tasks {alertsOn} {mode} />
+  <TaskList {alertsOn} />
 </main>
 
-<Footer bind:alertsOn bind:mode bind:tasks {count} />
+<Footer bind:alertsOn />
 
 <style>
   main {
@@ -30,5 +21,6 @@
     margin: 0 auto;
     width: 100%;
     max-width: 52rem;
+    text-align: center;
   }
 </style>

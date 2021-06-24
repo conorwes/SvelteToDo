@@ -15,10 +15,15 @@
   function handleDeleteClick() {
     dispatchEvent("delete", task);
   }
+
+  // Ensure the store is getting updated with the updated text for the task:
+  function handleEdit() {
+    dispatchEvent("edit", task);
+  }
 </script>
 
-<tr class:done={task.done}>
-  <td>
+<li class:done={task.done}>
+  <div>
     <ToolTip title="Click to toggle whether this task has been completed.">
       <EmojiButton
         on:click={handleCompleteClick}
@@ -26,18 +31,22 @@
         label="Completed"
       />
     </ToolTip>
-  </td>
-  <td>
+  </div>
+  <div>
     <ToolTip title="Click to edit this task.">
-      <span contenteditable="true" bind:innerHTML={task.text} />
+      <span
+        contenteditable="true"
+        bind:innerHTML={task.text}
+        on:input={handleEdit}
+      />
     </ToolTip>
-  </td>
-  <td>
+  </div>
+  <div>
     <ToolTip title="Click to delete this task from the list.">
       <EmojiButton on:click={handleDeleteClick} symbol="🗑️" label="Delete" />
     </ToolTip>
-  </td>
-</tr>
+  </div>
+</li>
 
 <style>
   .done {
@@ -45,7 +54,10 @@
     text-decoration: line-through;
   }
 
-  td {
-    color: white;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 </style>

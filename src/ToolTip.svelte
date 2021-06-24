@@ -39,5 +39,6 @@
     font-size: 1rem;
     font-family: var(--font-monospace);
     max-width: 16rem;
+    text-align: left;
   }
 </style>

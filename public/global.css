@@ -26,35 +26,14 @@ body {
   color: white;
 }
 
-a {
-  color: rgb(0, 100, 200);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-a:visited {
-  color: rgb(0, 80, 160);
-}
-
-label {
-  display: block;
-}
-
 button,
-input,
-select,
-textarea {
+input {
   background-color: transparent;
   color: inherit;
   font-size: 1rem;
 }
 
-input,
-select,
-textarea {
+input {
   padding: 0.75rem;
   margin: 0;
   border: 1px solid #ccc;
