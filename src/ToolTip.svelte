@@ -14,7 +14,7 @@
     x = event.pageX + 5;
     y = event.pageY + 5;
   }
-  
+
   function mouseLeave() {
     isHovered = false;
   }
