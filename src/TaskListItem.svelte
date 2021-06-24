@@ -1,7 +1,7 @@
-<script lang="ts">
+<script>
   import { createEventDispatcher } from "svelte";
 
-  import Emoji from "./Emoji.svelte";
+  import EmojiButton from "./EmojiButton.svelte";
   import ToolTip from "./ToolTip.svelte";
 
   export let task;
@@ -20,24 +20,32 @@
 <tr class:done={task.done}>
   <td>
     <ToolTip title="Click to toggle whether this task has been completed.">
-      <button on:click={handleCompleteClick}>
-        <Emoji symbol="🏆" label="Completed" />
-      </button>
+      <EmojiButton
+        on:click={handleCompleteClick}
+        symbol="🏆"
+        label="Completed"
+      />
     </ToolTip>
   </td>
   <td>
     <ToolTip title="Click to edit this task.">
-      <td contenteditable="true" bind:innerHTML={task.text} />
+      <span contenteditable="true" bind:innerHTML={task.text} />
     </ToolTip>
   </td>
   <td>
     <ToolTip title="Click to delete this task from the list.">
-      <button on:click={handleDeleteClick}>
-        <Emoji symbol="🗑️" label="Delete" />
-      </button>
+      <EmojiButton on:click={handleDeleteClick} symbol="🗑️" label="Delete" />
     </ToolTip>
   </td>
 </tr>
 
 <style>
+  .done {
+    opacity: 0.25;
+    text-decoration: line-through;
+  }
+
+  td {
+    color: white;
+  }
 </style>

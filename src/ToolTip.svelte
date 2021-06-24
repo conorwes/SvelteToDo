@@ -1,5 +1,6 @@
 <script>
   export let title = "";
+
   let isHovered = false;
   let x;
   let y;
@@ -34,8 +35,9 @@
 
 <style>
   .tooltip {
-    background: transparent;
     position: absolute;
-    font-size: 0.75em;
+    font-size: 1rem;
+    font-family: var(--font-monospace);
+    max-width: 16rem;
   }
 </style>
