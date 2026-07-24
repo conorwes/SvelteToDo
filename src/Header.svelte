@@ -10,7 +10,7 @@
   let taskDescription = "";
 
   // string to hold the title
-  $: title = selectRandomTitle();
+  const title = selectRandomTitle();
 
   // function to select a random title
   function selectRandomTitle() {
@@ -41,19 +41,14 @@
 
   // function to add a new task to the array
   function addTask() {
-    if (taskDescription !== "") {
-      tasks.update((values) => [
-        ...values,
-        { done: false, text: taskDescription, deleted: false },
-      ]);
-    }
+    tasks.add(taskDescription);
     taskDescription = "";
   }
 </script>
 
 <header>
   <h1>{title}</h1>
-  <div>
+  <form aria-label="Add a task" on:submit|preventDefault={addTask}>
     <ToolTip
       title="Type something that needs to get done, then press Enter or click ✔️ below to add it to the list."
     >
@@ -64,13 +59,15 @@
         bind:value={taskDescription}
         placeholder="What needs to be done?"
         on:keydown={onKeyDown}
+        aria-label="Task description"
+        maxlength="200"
         size="25"
       />
     </ToolTip>
     <ToolTip title="Click to add this new task to the list.">
-      <EmojiButton on:click={addTask} symbol="✔️" label="Add Task" />
+      <EmojiButton type="submit" symbol="✔️" label="Add task" />
     </ToolTip>
-  </div>
+  </form>
 </header>
 
 <style>
@@ -85,14 +82,15 @@
     text-align: center;
   }
 
-  div {
+  form {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   input {
-    margin-right: 0.75rem;
     background-color: transparent;
     font-style: italic;
     font-family: var(--font-monospace);

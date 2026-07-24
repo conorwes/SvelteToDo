@@ -1,10 +1,11 @@
 <script>
   export let label = "";
   export let symbol;
+  export let type = "button";
 </script>
 
-<button on:click>
-  <span role="img" aria-label={label} aria-hidden={label !== ""}>
+<button {type} on:click aria-label={label || undefined}>
+  <span aria-hidden="true">
     {symbol}
   </span>
 </button>

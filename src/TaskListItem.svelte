@@ -7,18 +7,39 @@
   export let task;
 
   const dispatchEvent = createEventDispatcher();
+  let isEditing = false;
+  let draftText = task.text;
+
+  $: if (!isEditing) {
+    draftText = task.text;
+  }
 
   function handleCompleteClick() {
-    dispatchEvent("complete", task);
+    dispatchEvent("complete", task.id);
   }
 
   function handleDeleteClick() {
-    dispatchEvent("delete", task);
+    dispatchEvent("delete", task.id);
   }
 
-  // Ensure the store is getting updated with the updated text for the task:
-  function handleEdit() {
-    dispatchEvent("edit", task);
+  function startEdit() {
+    isEditing = true;
+  }
+
+  function cancelEdit() {
+    draftText = task.text;
+    isEditing = false;
+  }
+
+  function saveEdit() {
+    const nextText = draftText.trim();
+    if (!nextText) {
+      cancelEdit();
+      return;
+    }
+
+    dispatchEvent("edit", { id: task.id, text: nextText });
+    isEditing = false;
   }
 </script>
 
@@ -28,19 +49,33 @@
       <EmojiButton
         on:click={handleCompleteClick}
         symbol="🏆"
-        label="Completed"
+        label={task.done ? "Mark as active" : "Mark as completed"}
       />
     </ToolTip>
   </div>
-  <div>
-    <ToolTip title="Click to edit this task.">
-      <span
-        contenteditable="true"
-        bind:innerHTML={task.text}
-        on:input={handleEdit}
+
+  {#if isEditing}
+    <div class="edit-group">
+      <input
+        type="text"
+        bind:value={draftText}
+        aria-label="Edit task"
+        maxlength="200"
       />
+      <ToolTip title="Save this task text.">
+        <EmojiButton on:click={saveEdit} symbol="💾" label="Save task" />
+      </ToolTip>
+      <ToolTip title="Cancel editing this task.">
+        <EmojiButton on:click={cancelEdit} symbol="✖️" label="Cancel edit" />
+      </ToolTip>
+    </div>
+  {:else}
+    <div class="task-text">{task.text}</div>
+    <ToolTip title="Click to edit this task text.">
+      <EmojiButton on:click={startEdit} symbol="✏️" label="Edit task" />
     </ToolTip>
-  </div>
+  {/if}
+
   <div>
     <ToolTip title="Click to delete this task from the list.">
       <EmojiButton on:click={handleDeleteClick} symbol="🗑️" label="Delete" />
@@ -57,7 +92,27 @@
   li {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0.5rem;
+    width: 100%;
+    max-width: 44rem;
+    padding: 0.5rem;
+  }
+
+  .task-text {
+    flex: 1;
+    text-align: left;
+    word-break: break-word;
+  }
+
+  .edit-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  input {
+    flex: 1;
   }
 </style>
